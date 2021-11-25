@@ -1,0 +1,85 @@
+version: "3.9"  # optional since v1.27.0
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    ports:
+      - "9544:9544"
+
+  dot-price:
+    build:
+      context: .
+      dockerfile: ./docker/price/Dockerfile
+    environment:
+        currency: "DOT"
+        start: 1597622400000
+
+  ksm-price:
+    build:
+      context: .
+      dockerfile: ./docker/price/Dockerfile
+    environment:
+        currency: "KSM"
+        start: 1599177600000
+
+  subscriber:
+    build:
+      context: .
+      dockerfile: ./docker/subscriber/Dockerfile
+    ports:
+        - "9505:9505"
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/scheduler/Dockerfile
+
+  scanner-api:
+    build:
+      context: .
+      dockerfile: ./docker/scanner-api/Dockerfile
+    ports:
+      - "3000:3000"
+
+  notifier-polkadot:
+    environment:
+      network: "Polkadot"
+      defaultHeight: "7858134"
+    build:
+      context: .
+      dockerfile: ./docker/notifier/Dockerfile
+
+  notifier-kusama:
+    environment:
+      network: "Kusama"
+      defaultHeight: "10249611"
+    build:
+      context: .
+      dockerfile: ./docker/notifier/Dockerfile
+
+  scanner-polkadot:
+    environment:
+      network: "Polkadot"
+      defaultHeight: "7858134"
+    build:
+      context: .
+      dockerfile: ./docker/scanner/Dockerfile
+
+  scanner-kusama:
+    environment:
+      network: "Kusama"
+      defaultHeight: "10249611"
+    build:
+      context: .
+      dockerfile: ./docker/scanner/Dockerfile
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+

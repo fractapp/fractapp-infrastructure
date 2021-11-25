@@ -1,0 +1,6 @@
+[submodule "fractapp-server"]
+	path = fractapp-server
+	url = https://github.com/fractapp/fractapp-server
+[submodule "scanner"]
+	path = scanner
+	url = https://github.com/fractapp/scanner
